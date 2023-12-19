@@ -8,10 +8,10 @@ struct ExerciseView: View {
     }
     @State private var showSuccess = false
     @State private var showHistory = false
-    @State private var rating = 0
     @State private var timerDone = false
     @State private var showTimer = false
     @Binding var selectedTab: Int
+    @EnvironmentObject var history: HistoryStore
     var startButton: some View {
         Button("Start Exercise") {
           showTimer.toggle()
@@ -19,6 +19,7 @@ struct ExerciseView: View {
     }
     var doneButton: some View {
       Button("Done") {
+          history.addDoneExercise(Exercise.exercises[index].exerciseName)
           timerDone = false
           showTimer.toggle()
           if lastExercise {
@@ -48,7 +49,7 @@ struct ExerciseView: View {
                   startButton
                   doneButton
                         .disabled(!timerDone)
-                          .sheet(isPresented: $showSuccess) {
+                        .sheet(isPresented: $showSuccess) {
                             SuccessView(selectedTab: $selectedTab)
                               .presentationDetents([.medium, .large])
                         } }
@@ -61,7 +62,7 @@ struct ExerciseView: View {
                           )
                         }
                         Spacer()
-                        RatingView(rating: $rating) // Move RatingView below Spacer
+                RatingView(exerciseIndex: index)
                         .padding()
                 Button("History") {
                   showHistory.toggle()
@@ -75,6 +76,7 @@ struct ExerciseView: View {
 }
 
 #Preview {
-    ExerciseView(selectedTab: .constant(3), index: 3)
+    ExerciseView(selectedTab: .constant(0), index: 0)
+      .environmentObject(HistoryStore())
 }
 
