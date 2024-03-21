@@ -30,6 +30,7 @@ struct WelcomeView: View {
                         .resizedToFill(width: 240, height: 240)
                         .clipShape(Circle())
                 }
+                .padding()
                 Button(action: { selectedTab = 0 }) {
                   Text("Get Started")
                   Image(systemName: "arrow.right.circle")
