@@ -32,7 +32,7 @@ struct WelcomeView: View {
                 }
                 .padding()
                 Button(action: { selectedTab = 0 }) {
-                  Text("Get Started")
+                  Text("Start")
                   Image(systemName: "arrow.right.circle")
                 }
                 .font(.title2)
